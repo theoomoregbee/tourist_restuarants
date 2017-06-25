@@ -32,3 +32,7 @@ header .branding+.search::after, header .branding+.search-box::after, .header .b
     background: #282929; 
 }
  
+.main-container .content-container .content-area {
+    padding-top: 0px;
+    padding-left: 0px; 
+}

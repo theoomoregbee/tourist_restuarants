@@ -1,0 +1,16 @@
+.sidenav {
+ min-width: 350px;
+  max-width: 400px;
+  height: 100%;  
+}
+
+.found-result-count {
+  border-bottom: 1px solid #ccc;
+  padding : 6px; 
+ 
+}
+
+.found-result-count > strong {
+  color: #282929;
+   font-size: 10px;
+}

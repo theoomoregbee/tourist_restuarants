@@ -4,17 +4,19 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ClarityModule } from "clarity-angular";
 
 import { AppComponent } from './app.component';
+import { SidenavComponent } from './sidenav/sidenav.component';
  
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    SidenavComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-     ClarityModule.forRoot(),
+    ClarityModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent]

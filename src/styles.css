@@ -2,3 +2,15 @@
 body {
   color: #a2aaaf;
 }
+
+.header-overflow-trigger>span, .header-overflow-trigger>span::before, .header-overflow-trigger>span::after {
+    background: rgba(131, 134, 134, 0.85);
+}
+
+.pull-left {
+  float: left;
+}
+
+.pull-right {
+  float: right;
+}
