@@ -1,0 +1,34 @@
+.branding .title {
+  font-size: 25px;
+}
+
+.avatar {
+border-radius: 50%;
+height: 35px;
+width: 35px;
+}
+
+.header {
+  background: white;
+  color: #a2aaaf;
+    z-index: 10;
+    padding: 0 16px 0 0;
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,.3);
+}
+
+
+header .settings>.dropdown>.dropdown-toggle, header .header-actions>.dropdown>.dropdown-toggle, .header .settings>.dropdown>.dropdown-toggle, .header .header-actions>.dropdown>.dropdown-toggle,
+header .search-box input[type="text"], header .search input[type="text"], .header .search-box input[type="text"], .header .search input[type="text"],
+header .search-box, header .search, .header .search-box, .header .search,
+header .branding .title, .header .branding .title {
+     color: #282929; 
+}
+
+header .search-box label::before, header .search label::before, .header .search-box label::before, .header .search label::before {
+    background-image: url(../assets/search.svg);  
+}
+
+header .branding+.search::after, header .branding+.search-box::after, .header .branding+.search::after, .header .branding+.search-box::after {
+    background: #282929; 
+}
+ 
