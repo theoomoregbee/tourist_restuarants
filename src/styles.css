@@ -22,7 +22,8 @@ body {
 }
 
 .curved-btn {
-    border: 1px solid #ccc; 
+    /*border: 1px solid #ccc; */
+    border: 1px solid rgba(224, 222, 222, 0.44); 
     border-radius: 40px;
     padding: 10px 17px 10px 20px;
     text-transform: uppercase;
@@ -37,8 +38,9 @@ a.curved-btn:visited {
 }
  
 a.curved-btn:hover {
-    color: #a2aaaf;
-    text-decoration: underline;
+    color: white;
+    text-decoration: none;
+    background-color: #FFB500;
 }
  
 a.curved-btn:link {
@@ -47,7 +49,7 @@ a.curved-btn:link {
 }
 
 .fab {
-border: 1px solid #ccc;
+border: 1px solid rgba(224, 222, 222, 0.44);
 border-radius: 100%;
 padding: 5px;
 }

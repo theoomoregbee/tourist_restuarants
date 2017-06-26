@@ -6,7 +6,8 @@ import { ClarityModule } from "clarity-angular";
 import { AppComponent } from './app.component';
 import { SidenavComponent } from './sidenav/sidenav.component';
 import { ResultComponent } from './result/result.component';
- 
+import { GeolocationService } from "app/services/geolocation.service";
+
 
 
 @NgModule({
@@ -20,7 +21,7 @@ import { ResultComponent } from './result/result.component';
     BrowserAnimationsModule,
     ClarityModule.forRoot(),
   ],
-  providers: [],
+  providers: [GeolocationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

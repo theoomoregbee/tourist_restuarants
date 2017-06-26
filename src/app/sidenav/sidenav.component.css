@@ -1,5 +1,6 @@
 section {
   background-color: white;
+  margin-bottom:0px; 
 }
 
 .sidenav {
@@ -10,7 +11,7 @@ section {
 }
 
 .found-result-count {
-  border-bottom: 1px solid #ccc;
+  border-bottom: 1px solid rgba(224, 222, 222, 0.44);
   padding : 6px; 
  
 }

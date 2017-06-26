@@ -5,16 +5,19 @@ ul.results {
 }
 
 .results > li {
-  border-bottom: 1px solid #ccc;
-   padding-top:5px;
+  border-bottom: 1px solid rgba(224, 222, 222, 0.44);
+  padding-top:5px;
   padding-bottom: 11px;
+}
+.results > li:last-child {
+   border-bottom: none; 
 }
 
 .results > li img {
   height: 80px;
   width: 80px;
   border-radius: 5px;
-  border: 1px solid #ccc;
+  border: 1px solid rgba(224, 222, 222, 0.44);
 }
 
 .results > li h1 {
@@ -30,7 +33,7 @@ ul.results {
 }
 
 .rating .not-filled{
-color: #ccc;
+color: rgba(224, 222, 222, 0.44);
 }
 
 .results > li p {
