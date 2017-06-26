@@ -5,13 +5,15 @@ import { ClarityModule } from "clarity-angular";
 
 import { AppComponent } from './app.component';
 import { SidenavComponent } from './sidenav/sidenav.component';
+import { ResultComponent } from './result/result.component';
  
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    SidenavComponent
+    SidenavComponent,
+    ResultComponent
   ],
   imports: [
     BrowserModule,

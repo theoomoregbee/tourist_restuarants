@@ -24,7 +24,7 @@ body {
 .curved-btn {
     border: 1px solid #ccc; 
     border-radius: 40px;
-    padding: 10px 30px 10px 30px;
+    padding: 10px 17px 10px 20px;
     text-transform: uppercase;
     font-size: 11px;
     font-weight: 500;
@@ -44,4 +44,15 @@ a.curved-btn:hover {
 a.curved-btn:link {
     color: #a2aaaf;
     text-decoration: none;
+}
+
+.fab {
+border: 1px solid #ccc;
+border-radius: 100%;
+padding: 5px;
+}
+
+.fab.fab-primary {
+  background-color: #00A5FA;
+  color: white;
 }

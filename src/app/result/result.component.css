@@ -1,0 +1,44 @@
+
+ul.results {
+  list-style: none;
+  margin: 8px; 
+}
+
+.results > li {
+  border-bottom: 1px solid #ccc;
+   padding-top:5px;
+  padding-bottom: 11px;
+}
+
+.results > li img {
+  height: 80px;
+  width: 80px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.results > li h1 {
+  font-size: 15px;
+  margin:0px;
+  line-height: normal;
+  font-weight: 500;
+}
+
+.rating {
+  color: #00A5FA;
+  font-size: 12px;
+}
+
+.rating .not-filled{
+color: #ccc;
+}
+
+.results > li p {
+  margin-top: 2px;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+
+
