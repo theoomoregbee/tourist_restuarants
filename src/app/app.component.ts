@@ -67,6 +67,10 @@ export class AppComponent implements OnInit {
       }
     });
 
+    //add over event 
+  //  this.addHoverToMaker(marker, "Me"); this is just an example case
+
+
     if (marker_information != null) {
       let content = marker_information;
       this.addInfoWindow(marker, content);
@@ -80,7 +84,7 @@ export class AppComponent implements OnInit {
      * @param colour  can either be red, green, blue or yellow or any colour code
      * @param text which is the text to diplay inside our marker
      */
-  private customIcon(text:string, colour: string = '#00a5fa') {
+  private customIcon(text: string, colour: string = '#00a5fa') {
     return `data:image/svg+xml;charset=utf-8, 
       <svg width="50px" height="50px" viewBox="0 0 130 153" version="1.1" xmlns="http://www.w3.org/2000/svg">
 <g id="#ffb500ff">
@@ -106,5 +110,23 @@ export class AppComponent implements OnInit {
     google.maps.event.addListener(marker, 'click', () => {
       infoWindow.open(this.map, marker);
     });
+
   }
+
+  /**
+   * 
+   * @param marker 
+   * @param marker_text this is used to hold on to our marker text, so we can perform hovering on our marker
+   */
+  addHoverToMaker(marker, marker_text) {
+    let owk = this;
+    google.maps.event.addListener(marker, 'mouseover', function () {
+      this.setIcon(owk.customIcon(marker_text));
+    });
+
+    google.maps.event.addListener(marker, 'mouseout', function () {
+      this.setIcon(owk.customIcon(marker_text, "#ffb500"));
+    });
+  }
+
 }
