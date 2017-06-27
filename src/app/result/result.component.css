@@ -6,9 +6,15 @@ ul.results {
 
 .results > li {
   border-bottom: 1px solid rgba(224, 222, 222, 0.44);
-  padding-top:5px;
+  padding:5px;
+  padding-top:15px;
   padding-bottom: 11px;
 }
+
+.results >li:hover {
+  background-color: #F5F7F9;
+}
+
 .results > li:last-child {
    border-bottom: none; 
 }
@@ -25,15 +31,6 @@ ul.results {
   margin:0px;
   line-height: normal;
   font-weight: 500;
-}
-
-.rating {
-  color: #00A5FA;
-  font-size: 12px;
-}
-
-.rating .not-filled{
-color: rgba(224, 222, 222, 0.44);
 }
 
 .results > li p {

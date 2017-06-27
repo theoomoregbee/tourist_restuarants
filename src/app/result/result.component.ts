@@ -1,42 +1,80 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ApplicationRef } from '@angular/core';
+import { IPlace } from "app/interfaces/iplace";
+import { PlacesService } from "app/services/places.service";
 
 @Component({
   selector: 'app-result',
-  template: `
+  template: `{{loader}}
     <ul class="results">
-      <li *ngFor="let i of [1,2,3,4,5,6,7]">
+      <li *ngFor="let place of places">
+     
         <div class="row">
           <div class="col-xs-3">
-            <img src="assets/default-picture.jpg">
+            <img *ngIf="place.photos?.length>=1" [src]="place.photos[0]">
+            <img *ngIf="!place.photos" [src]="place.icon">
           </div>
           <div class="col-xs-9">
-            <h1>Ikeja City Mall
-              <span class="rating pull-right">
-               <span>★</span><span>★</span><span>★</span><span>★</span><span class="not-filled">★</span>
-              </span>
-            </h1>
-            <p>321 East, 62nd street <br> New York, 10022</p>
-            <p>
-              <span class="text-primary">Distance:</span> 2.4 miles
+            <h1>{{place.name}}
             <span class="pull-right">
-              <button class="fab fab-primary">
+            <app-rating [rating]="place.rating"></app-rating> 
+            </span>
+               
+            </h1>
+            <p>{{place.vicinity }}</p>
+            <p>
+               <span class="text-primary">Opened:</span> {{place.opening_hours?.open_now?'Yes':'No'}}
+            <span class="pull-right">
+              <button class="fab fab-primary" (mouseenter)="showOpeningHours(place, 'enter')" (mouseleave)="showOpeningHours(place, 'leave')">
                 <clr-icon shape="clock" size="24"></clr-icon>
               </button>
               <a href="#" class="curved-btn">More &nbsp; &rarr;</a>
-            </span>
-            </p>
+            </span>  
+            </p> 
           </div>
         </div>
+        <!-- working hours -->
+        <div class="row" style="margin-top:10px" *ngIf="place.show">
+        {{place.opening_hours | json}}
+           <div class="col-xs-3">
+              <span style="font-weight:500; font-size:12px">{{today | date:'d MMM y'}}</span>
+          </div>
+          <div class="col-xs-9">
+            <span class="curved-btn" *ngFor="let i of [1,2,3]">8:30 <sup>AM</sup></span> 
+            <span class="curved-btn">...</span> 
+          </div> 
+         </div>
+        <!-- working hours end -->
+
       </li>
     </ul>
   `,
   styleUrls: ['./result.component.css']
 })
 export class ResultComponent implements OnInit {
+  places: IPlace[] = [];
+  loader: boolean = false;
+  today = new Date();
+  rating_stars: number[] = [1, 2, 3, 4, 5];
 
-  constructor() { }
+  constructor(private _placesService: PlacesService, private _changeDetector: ChangeDetectorRef, private _applicationRef: ApplicationRef) { }
 
   ngOnInit() {
+    this.loader = true;
+    this._placesService.getPlaces().subscribe((places: IPlace[]) => {
+      this.places = places;
+      this.loader = false;
+      this._changeDetector.detectChanges();
+      //this._applicationRef.tick();
+    });
+  }
+
+  showOpeningHours(place, out: "leave" | "enter") {
+    place.show = out == "enter";
+    this._changeDetector.detectChanges();
+  }
+
+  ceil(x: number) {
+    return Math.ceil(x);
   }
 
 }

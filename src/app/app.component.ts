@@ -1,5 +1,6 @@
 import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
 import { GeolocationService } from "app/services/geolocation.service";
+import { PlacesService } from "app/services/places.service";
 declare var google;
 @Component({
   selector: 'app-root',
@@ -11,7 +12,7 @@ export class AppComponent implements OnInit {
   map: any;
   mapLoader: boolean = false;
 
-  constructor(private _geolocationService: GeolocationService) {
+  constructor(private _geolocationService: GeolocationService, private _placesService: PlacesService) {
 
   }
 
@@ -40,6 +41,30 @@ export class AppComponent implements OnInit {
       this.addMarker({ lat: loc.lat(), lng: loc.lng() });
 
       this.mapLoader = false;
+      var service = new google.maps.places.PlacesService(this.map);
+      service.nearbySearch({
+          location: { lat: loc.lat(), lng: loc.lng() },
+        // location: { lat: 43.2136281, lng: -74.5003516 },
+        radius: 500,
+        type: ['restaurant']
+      }, (results, status) => {
+       // console.log("results", results);
+        if (status === google.maps.places.PlacesServiceStatus.OK) {
+          let places = results.map((place) => {
+            place.location = { lat: place.geometry.location.lat(), lng: place.geometry.location.lng() };
+            if (place.photos) {
+              // console.log("place", place, "image url", place.photos[0].getUrl({'maxWidth': 35, 'maxHeight': 35}));
+              place.photos = place.photos.map(photo => {
+                return photo.getUrl({ 'maxWidth': 80, 'maxHeight': 80 });
+              });
+            }
+            return place;
+          });
+          this._placesService.setPlaces(places);
+        }
+      });
+
+
     }, (err) => {
       this.mapLoader = false;
       alert(err);
@@ -60,7 +85,6 @@ export class AppComponent implements OnInit {
       map: this.map,
       animation: google.maps.Animation.DROP,
       position: position,
-      //   icon: this.customIcon(icon_colour) 
       icon: {
         // anchor: new google.maps.Point(16, 16),
         url: this.customIcon("Me", "#ffb500")
@@ -68,7 +92,7 @@ export class AppComponent implements OnInit {
     });
 
     //add over event 
-  //  this.addHoverToMaker(marker, "Me"); this is just an example case
+    //  this.addHoverToMaker(marker, "Me"); this is just an example case
 
 
     if (marker_information != null) {
