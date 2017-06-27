@@ -30,7 +30,7 @@ export class AppComponent implements OnInit {
 
       let mapOptions = {
         center: new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
-        zoom: 15,//17,
+        zoom: 16,//17,
         mapTypeId: google.maps.MapTypeId.ROADMAP
       }
 
@@ -38,29 +38,34 @@ export class AppComponent implements OnInit {
 
       //add my location to the mapper
       let loc = this.map.getCenter();
-      this.addMarker({ lat: loc.lat(), lng: loc.lng() });
+      this.addMarker({ lat: loc.lat(), lng: loc.lng() }, "Me",null, "#ffb500");
 
       this.mapLoader = false;
       var service = new google.maps.places.PlacesService(this.map);
       service.nearbySearch({
-          location: { lat: loc.lat(), lng: loc.lng() },
+        location: { lat: loc.lat(), lng: loc.lng() },
         // location: { lat: 43.2136281, lng: -74.5003516 },
         radius: 500,
         type: ['restaurant']
       }, (results, status) => {
-       // console.log("results", results);
         if (status === google.maps.places.PlacesServiceStatus.OK) {
-          let places = results.map((place) => {
+          let places = results.map((place, index) => {
             place.location = { lat: place.geometry.location.lat(), lng: place.geometry.location.lng() };
             if (place.photos) {
-              // console.log("place", place, "image url", place.photos[0].getUrl({'maxWidth': 35, 'maxHeight': 35}));
               place.photos = place.photos.map(photo => {
                 return photo.getUrl({ 'maxWidth': 80, 'maxHeight': 80 });
               });
             }
+
+            //we need markers now 
+            this.addMarker(place.location, index, true);
+
             return place;
           });
           this._placesService.setPlaces(places);
+
+
+
         }
       });
 
@@ -76,10 +81,9 @@ export class AppComponent implements OnInit {
    * and it collects this params 
    * @param position which is used to determine if the marker is to be placed in the current map view port or 
    * the position specified
-   * @param icon_colour  which is a string of either red, green, blue or yellow
-   * @param marker_information optional field if you don't want to show any information when the marker is clicked
+   * @param icon_colour  which is a string of either 
    */
-  private addMarker(position: { lat: number, lng: number }, icon_colour?: string, marker_information?: string): void {
+  private addMarker(position: { lat: number, lng: number }, place_index: string, hover: boolean = false, icon_colour?: string): void {
 
     let marker = new google.maps.Marker({
       map: this.map,
@@ -87,18 +91,19 @@ export class AppComponent implements OnInit {
       position: position,
       icon: {
         // anchor: new google.maps.Point(16, 16),
-        url: this.customIcon("Me", "#ffb500")
+        url: this.customIcon(place_index, icon_colour)
       }
     });
 
     //add over event 
-    //  this.addHoverToMaker(marker, "Me"); this is just an example case
+    if (hover)
+      this.addHoverToMaker(marker, place_index);
 
 
-    if (marker_information != null) {
-      let content = marker_information;
-      this.addInfoWindow(marker, content);
-    }
+    // if (marker_information != null) {
+    //   let content = marker_information;
+    //   this.addInfoWindow(marker, content);
+    // }
 
   }
 
@@ -145,11 +150,11 @@ export class AppComponent implements OnInit {
   addHoverToMaker(marker, marker_text) {
     let owk = this;
     google.maps.event.addListener(marker, 'mouseover', function () {
-      this.setIcon(owk.customIcon(marker_text));
+      this.setIcon(owk.customIcon(marker_text,"#ffb500"));
     });
 
     google.maps.event.addListener(marker, 'mouseout', function () {
-      this.setIcon(owk.customIcon(marker_text, "#ffb500"));
+      this.setIcon(owk.customIcon(marker_text));
     });
   }
 
