@@ -19,7 +19,7 @@ ul.results {
    border-bottom: none; 
 }
 
-.results > li img {
+.results > li img{
   height: 80px;
   width: 80px;
   border-radius: 5px;
@@ -39,6 +39,18 @@ ul.results {
   font-weight: 500;
   line-height: 1.4;
 }
+
+.found-result-count {
+  border-bottom: 1px solid rgba(224, 222, 222, 0.44);
+  padding : 6px; 
+ 
+}
+
+.found-result-count > strong {
+  color: #282929;
+   font-size: 10px;
+}
+
 
 
 

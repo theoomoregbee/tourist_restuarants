@@ -2,6 +2,17 @@ import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
 import { GeolocationService } from "app/services/geolocation.service";
 import { PlacesService } from "app/services/places.service";
 declare var google;
+
+
+interface IInfoWindow {
+  place_id: string,
+  name: string,
+  rating: number,
+  photos?: string[],
+  icon: string,
+  vicinity: string
+}
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -38,7 +49,7 @@ export class AppComponent implements OnInit {
 
       //add my location to the mapper
       let loc = this.map.getCenter();
-      this.addMarker({ lat: loc.lat(), lng: loc.lng() }, "Me",null, "#ffb500");
+      this.addMarker({ lat: loc.lat(), lng: loc.lng() }, "Me", false, "#ffb500");
 
       this.mapLoader = false;
       var service = new google.maps.places.PlacesService(this.map);
@@ -58,7 +69,7 @@ export class AppComponent implements OnInit {
             }
 
             //we need markers now 
-            this.addMarker(place.location, index, true);
+            this.addMarker(place.location, index, true, undefined, place);
 
             return place;
           });
@@ -81,9 +92,9 @@ export class AppComponent implements OnInit {
    * and it collects this params 
    * @param position which is used to determine if the marker is to be placed in the current map view port or 
    * the position specified
-   * @param icon_colour  which is a string of either 
+   * 
    */
-  private addMarker(position: { lat: number, lng: number }, place_index: string, hover: boolean = false, icon_colour?: string): void {
+  private addMarker(position: { lat: number, lng: number }, place_label: string, hover: boolean, icon_colour?: string, infoWindow?: IInfoWindow): void {
 
     let marker = new google.maps.Marker({
       map: this.map,
@@ -91,19 +102,19 @@ export class AppComponent implements OnInit {
       position: position,
       icon: {
         // anchor: new google.maps.Point(16, 16),
-        url: this.customIcon(place_index, icon_colour)
+        url: this.customIcon(place_label, icon_colour)
       }
     });
 
     //add over event 
     if (hover)
-      this.addHoverToMaker(marker, place_index);
+      this.addHoverToMaker(marker, place_label);
 
 
-    // if (marker_information != null) {
-    //   let content = marker_information;
-    //   this.addInfoWindow(marker, content);
-    // }
+    if (infoWindow != null) {
+      let content = infoWindow;
+      this.addInfoWindow(marker, content);
+    }
 
   }
 
@@ -130,10 +141,31 @@ export class AppComponent implements OnInit {
    * @param marker 
    * @param content 
    */
-  private addInfoWindow(marker, content): void {
+  private addInfoWindow(marker, content: IInfoWindow): void {
+
+    let html_info: HTMLDivElement = document.createElement('div'); 
+
+    let img = content.icon;
+    if (content.photos)
+      if (content.photos.length >= 1)
+        img = content.photos[0];
+
+    html_info.innerHTML = `
+    <div class="row infoWindow">
+          <div class="col-xs-3"> 
+            <img src="${img}" >
+          </div>
+          <div class="col-xs-9">
+            <h1>${content.name}</h1>
+            <p>${content.vicinity}</p> 
+          </div>
+        </div>
+    `;
+
+
 
     let infoWindow = new google.maps.InfoWindow({
-      content: content
+      content: html_info
     });
 
     google.maps.event.addListener(marker, 'click', () => {
@@ -150,7 +182,7 @@ export class AppComponent implements OnInit {
   addHoverToMaker(marker, marker_text) {
     let owk = this;
     google.maps.event.addListener(marker, 'mouseover', function () {
-      this.setIcon(owk.customIcon(marker_text,"#ffb500"));
+      this.setIcon(owk.customIcon(marker_text, "#ffb500"));
     });
 
     google.maps.event.addListener(marker, 'mouseout', function () {

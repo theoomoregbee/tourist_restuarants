@@ -4,7 +4,23 @@ import { PlacesService } from "app/services/places.service";
 
 @Component({
   selector: 'app-result',
-  template: `{{loader}}
+  template: `
+  <div class="found-result-count">
+      <strong>FOUND {{places.length}} RESULTS</strong>
+      <span class="pull-right">
+          <clr-dropdown clrMenuPosition="bottom-right">
+          <a clrDropdownToggle>
+               Rating
+                <clr-icon shape="caret down"></clr-icon>
+            </a>
+          <clr-dropdown-menu>
+            <a href="..." clrDropdownItem>Preferences</a>
+            <a href="..." clrDropdownItem>Log out</a>
+          </clr-dropdown-menu>
+        </clr-dropdown>
+        </span>
+    </div>
+    {{loader}}
     <ul class="results">
       <li *ngFor="let place of places">
      
