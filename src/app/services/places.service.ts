@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Subject } from "rxjs/Subject";
 import { IPlace } from "app/interfaces/iplace";
+import { Observable } from "rxjs/Observable";
+
+declare var google;
 
 @Injectable()
 export class PlacesService {
@@ -53,6 +56,28 @@ export class PlacesService {
         <text xmlns="http://www.w3.org/2000/svg" id="c" x="50%" y="45%" text-anchor="middle" fill="white" stroke-width="2px" dy=".3em" style="&#10;    font-size: 70px;&#10;font-family: sans-serif;">${text}</text>
         </g>
       </svg>`;
+  }
+
+  /**
+   * this is used to get the real details of a service
+   * @param place 
+   */
+  getPlaceDetails(place: IPlace): Observable<IPlace> {
+
+    return Observable.create((observer) => {
+      let request = {
+        placeId: place.place_id
+      };
+      let service = new google.maps.places.PlacesService(place.marker.map);
+      service.getDetails(request, (place: IPlace, status) => {
+        if (status == google.maps.places.PlacesServiceStatus.OK) {
+          observer.next(place);
+        } else {
+          observer.error(status);
+        }
+        observer.complete();
+      });
+    });
   }
 
 }

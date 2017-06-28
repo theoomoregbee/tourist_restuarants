@@ -38,3 +38,23 @@ clr-icon {
     color: #FFB500;
 }
  
+ .business {
+     list-style: none;
+ }
+ .business > li {
+     padding: 5px;
+     border-bottom: 1px solid rgba(224, 222, 222, 0.44);
+ }
+ .business > li:last-child {
+   border-bottom: none; 
+}
+
+a.more:visited,a.more {
+    color: white;
+    border-bottom-right-radius:5px;
+    border-bottom-left-radius:5px;
+}
+
+.card-img img { 
+    height: 170px;
+}

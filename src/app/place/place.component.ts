@@ -8,49 +8,63 @@ import { NgxGalleryOptions, NgxGalleryImage, NgxGalleryAnimation } from 'ngx-gal
   styleUrls: ['./place.component.css']
 })
 export class PlaceComponent implements OnInit {
-  @Input() place: IPlace;
+  @Input() place: any;
   galleryOptions: NgxGalleryOptions[];
   galleryImages: NgxGalleryImage[];
 
   constructor() { }
 
   ngOnInit() {
+
+
     this.galleryOptions =
       [{
         image: false,
-        height: '100px'
+        height: '100px',
+        width:'100%'
       }, {
         breakpoint: 500,
         width: '100%'
       }];
 
-    this.galleryImages = [
-      {
-        small: 'assets/img/1-small.jpeg',
-        medium: 'assets/img/1-medium.jpeg',
-        big: 'assets/img/1-big.jpeg'
-      },
-      {
-        small: 'assets/img/2-small.jpeg',
-        medium: 'assets/img/2-medium.jpeg',
-        big: 'assets/img/2-big.jpeg'
-      },
-      {
-        small: 'assets/img/3-small.jpeg',
-        medium: 'assets/img/3-medium.jpeg',
-        big: 'assets/img/3-big.jpeg'
-      },
-      {
-        small: 'assets/img/4-small.jpeg',
-        medium: 'assets/img/4-medium.jpeg',
-        big: 'assets/img/4-big.jpeg'
-      },
-      {
-        small: 'https://lukasz-galka.github.io/ngx-gallery-demo/assets/img/4-small.jpeg',
-        medium: 'https://lukasz-galka.github.io/ngx-gallery-demo/assets/img/4-medium.jpeg',
-        big: 'https://lukasz-galka.github.io/ngx-gallery-demo/assets/img/4-big.jpeg'
+    this.galleryImages = [];
+
+    if (this.place.photos)
+      for (let photo of this.place.photos) { 
+        this.galleryImages.push({
+          small: photo.getUrl({ maxWidth: 200, maxHeight: 133 }),
+          medium: photo.getUrl({ maxWidth: 600, maxHeight: 400 }),
+          big: photo.getUrl({ maxWidth: 1200, maxHeight: 800 })
+        });
       }
-    ];
+
+    // this.galleryImages = [
+    //   {
+    //     small: 'assets/img/1-small.jpeg',
+    //     medium: 'assets/img/1-medium.jpeg',
+    //     big: 'assets/img/1-big.jpeg'
+    //   },
+    //   {
+    //     small: 'assets/img/2-small.jpeg',
+    //     medium: 'assets/img/2-medium.jpeg',
+    //     big: 'assets/img/2-big.jpeg'
+    //   },
+    //   {
+    //     small: 'assets/img/3-small.jpeg',
+    //     medium: 'assets/img/3-medium.jpeg',
+    //     big: 'assets/img/3-big.jpeg'
+    //   },
+    //   {
+    //     small: 'assets/img/4-small.jpeg',
+    //     medium: 'assets/img/4-medium.jpeg',
+    //     big: 'assets/img/4-big.jpeg'
+    //   },
+    //   {
+    //     small: 'https://lukasz-galka.github.io/ngx-gallery-demo/assets/img/4-small.jpeg',
+    //     medium: 'https://lukasz-galka.github.io/ngx-gallery-demo/assets/img/4-medium.jpeg',
+    //     big: 'https://lukasz-galka.github.io/ngx-gallery-demo/assets/img/4-big.jpeg'
+    //   }
+    // ];
   }
 
 

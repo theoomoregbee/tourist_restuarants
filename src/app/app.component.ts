@@ -24,6 +24,8 @@ export class AppComponent implements OnInit {
   map: any;
   mapLoader: boolean = false;
   selected_place: IPlace;
+  selected_loader: boolean = false;
+  place_details: IPlace;
 
   constructor(private _geolocationService: GeolocationService, private _placesService: PlacesService, private _changeDetector: ChangeDetectorRef) {
 
@@ -32,6 +34,19 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     this._placesService.getSelectedPlace().subscribe((place: IPlace) => {
       this.selected_place = place;
+      this.selected_loader = true;
+
+      this._placesService.getPlaceDetails(this.selected_place).subscribe((placeDetails) => {
+        this.selected_loader = false;
+        this.selected_place = placeDetails;
+        this._changeDetector.detectChanges();
+      }, (error) => {
+        this.selected_loader = false;
+        alert("Error fetching place details");
+        console.error(error);
+         this._changeDetector.detectChanges();
+      });
+
       this._changeDetector.detectChanges();
     });
     this.loadMap();
@@ -75,7 +90,7 @@ export class AppComponent implements OnInit {
             }
 
             //we need markers now 
-            place.marker = this.addMarker(place.location, index, true, undefined, place); 
+            place.marker = this.addMarker(place.location, index, true, undefined, place);
 
             return place;
           });
@@ -123,7 +138,7 @@ export class AppComponent implements OnInit {
     }
 
     return marker;
-  } 
+  }
 
   /**
    * this is used to add the information window to our marker when it's clicked, so users

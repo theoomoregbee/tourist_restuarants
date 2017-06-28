@@ -31,22 +31,27 @@
 
   </clr-header>
 
-<!--For map-->
-  <!--<div class="content-container" [hidden]="selected_place">-->
-  <div class="content-container" *ngIf="false">
+  <!--For map-->
+  <div class="content-container" [hidden]="selected_place">
+    <!--<div class="content-container" *ngIf="false">-->
     <app-sidenav></app-sidenav>
-    <main class="content-area"> 
+    <main class="content-area">
       <div #map id="map"></div>
     </main>
   </div>
 
-<!--For Selected-->
- <!--<div class="content-container" *ngIf="selected_place" >-->
- <div class="content-container">
-    <main class="content-area" style="padding-top:10px;" > 
-     <a href="#" class="curved-btn" (click)="selected_place=null">&larr; &nbsp; Back</a>
-     <app-place [place]="selected_place"></app-place>
+  <!--For Selected-->
+  <div class="content-container" *ngIf="selected_place">
+    <!--<div class="content-container">-->
+    <main class="content-area" style="padding-top:10px;">
+      <a class="curved-btn" (click)="selected_place=null">&larr; &nbsp; Back</a>
+      <p align="center" *ngIf="selected_loader">
+        <span class="spinner">
+         Loading...
+      </span>
+      </p>
+      <app-place [place]="selected_place"  *ngIf="!selected_loader"></app-place>
     </main>
- </div>
+  </div>
 
 </clr-main-container>

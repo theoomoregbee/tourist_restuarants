@@ -6,11 +6,14 @@
       <div class="card" style="padding: 24px;">
         <div class="card-block">
           <div class="card-text title">
-            <span style="font-size:30px">Testing Restuarant Details</span>
-            <!--  {{place.name}} -->
+            <span style="font-size:30px">{{place.name}}</span> 
             <span class="pull-right">
-                 <app-rating rating="4"></app-rating>
+                 <app-rating [rating]="place.rating"></app-rating>
               </span>
+            <br>
+            <small>
+               {{place.vicinity}}
+              </small>
           </div>
         </div>
       </div>
@@ -22,19 +25,15 @@
             <clr-icon shape="chat-bubble"></clr-icon> Reviews
           </div>
         </div>
-        <div class="card-block">
+        <div class="card-block" *ngFor="let review of place.reviews">
           <div class="card-header">
-            Theophilus Omoregbee <small>09 JUNE 2016</small>
+          <img [src]="review.profile_photo_url" style="height:50px" alt="Profile picture">  {{review.author_name}} <small  style="color:#a2aaaf">{{review.relative_time_description}}</small>
             <span class="pull-right">
-                <app-rating rating="4"></app-rating>
+                <app-rating [rating]="review.rating"></app-rating>
               </span>
           </div>
           <div class="card-text">
-            hjdhjd dhjfdhjfhjdldfldf dfhdfhdfkdf d hdfkdfhbkdhfbdhfbdfdfhjf dhfd djfh djfhdfhjdjf dhjf djf hjdf hdjfhdjf dfhjdfhdbfhjbdjfbdfdfbldfldfdjhfldf
-            hjdhjd dhjfdhjfhjdldfldf dfhdfhdfkdf d hdfkdfhbkdhfbdhfbdfdfhjf dhfd djfh djfhdfhjdjf dhjf djf hjdf hdjfhdjf
-            dfhjdfhdbfhjbdjfbdfdfbldfldfdjhfldf hjdhjd dhjfdhjfhjdldfldf dfhdfhdfkdf d hdfkdfhbkdhfbdhfbdfdfhjf dhfd djfh
-            djfhdfhjdjf dhjf djf hjdf hdjfhdjf dfhjdfhdbfhjbdjfbdfdfbldfldfdjhfldf hjdhjd dhjfdhjfhjdldfldf dfhdfhdfkdf d
-            hdfkdfhbkdhfbdhfbdfdfhjf dhfd djfh djfhdfhjdjf dhjf djf hjdf hdjfhdjf dfhjdfhdbfhjbdjfbdfdfbldfldfdjhfldf
+            {{review.text}}
           </div>
         </div>
       </div>
@@ -49,7 +48,7 @@
         </div>
         <div class="card-block">
           <div class="card-header">
-            Theophilus Omoregbee <small>09 JUNE 2016</small>
+            Theophilus Omoregbee <small style="color:#a2aaaf">09 JUNE 2016</small>
             <span class="pull-right">
                 <app-rating rating="4"></app-rating>
               </span>
@@ -78,23 +77,27 @@
         </div>
 
       </div>
-      <!--/Photos --> 
+      <!--/Photos -->
 
     </div>
     <!--/info pane-->
 
     <!--Brief info side pane-->
-    <div class="col-md-4" >
+    <div class="col-md-4">
 
       <div class="card">
-        <div class="card-img">
-          <img src="https://lukasz-galka.github.io/ngx-gallery-demo/assets/img/4-medium.jpeg" />
+        <div class="card-img"> 
+            <img *ngIf="place.photos?.length>=1" [src]="place.photos[0].getUrl({ maxWidth: 400, maxHeight: 170 })">
+            <img *ngIf="!place.photos" [src]="place.icon">
         </div>
         <div class="card-block">
           <div class="card-text">
-            Address
-            <p align="center" class="website">
-              <a href="http://www.google.com" target="_blank"> <i class="fa fa-link"></i>  Our Website</a> 
+            <p align="center" class="website" style="margin-bottom:24px">
+              <a href="tel://{{formatted_phone_number}}"> <i class="fa fa-phone"></i>  {{place.formatted_phone_number}}</a>
+            </p>
+            {{place.formatted_address}}
+            <p align="center">
+              <a [href]="place.website" target="_blank"> <i class="fa fa-link"></i>  {{place.website}}</a>
             </p>
             <p align="center" class="socials">
               <i class="fa fa-facebook-official"></i>
@@ -104,6 +107,34 @@
           </div>
         </div>
       </div>
+
+      <!--Business hours -->
+      <div class="card">
+        <div class="card-block">
+          <div class="card-header">
+            <clr-icon shape="clock"></clr-icon> Business Hours
+          </div>
+        </div>
+        <div class="card-block">
+          <div class="card-text">
+            <ul class="business">
+              <li *ngFor="let weekday of place.opening_hours?.weekday_text">{{weekday}}</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <!--/Business hours -->
+
+       <!--Your Business Claim -->
+      <div class="card" style="border-bottom-right-radius:5px;border-bottom-left-radius:5px;">
+        <div class="card-block">
+          <div class="card-header">
+            <clr-icon shape="lightbulb"></clr-icon> Is this your business?
+          </div> 
+        </div> 
+          <a [href]="place.url" target="_blank" class="more">CLAIM IT HERE &nbsp; &rarr;</a>
+      </div>
+      <!--/Your Business Claim -->
 
     </div>
     <!--/Brief info side pane-->
