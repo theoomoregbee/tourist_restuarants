@@ -72,22 +72,11 @@
           <div class="card-header">
             <clr-icon shape="camera"></clr-icon> Photo Gallery
           </div>
-        </div>
-        <div class="card-block">
-          <div class="card-header">
-            Theophilus Omoregbee <small>09 JUNE 2016</small>
-            <span class="pull-right">
-                <app-rating rating="4"></app-rating>
-              </span>
-          </div>
-          <div class="card-text">
-            hjdhjd dhjfdhjfhjdldfldf dfhdfhdfkdf d hdfkdfhbkdhfbdhfbdfdfhjf dhfd djfh djfhdfhjdjf dhjf djf hjdf hdjfhdjf dfhjdfhdbfhjbdjfbdfdfbldfldfdjhfldf
-            hjdhjd dhjfdhjfhjdldfldf dfhdfhdfkdf d hdfkdfhbkdhfbdhfbdfdfhjf dhfd djfh djfhdfhjdjf dhjf djf hjdf hdjfhdjf
-            dfhjdfhdbfhjbdjfbdfdfbldfldfdjhfldf hjdhjd dhjfdhjfhjdldfldf dfhdfhdfkdf d hdfkdfhbkdhfbdhfbdfdfhjf dhfd djfh
-            djfhdfhjdjf dhjf djf hjdf hdjfhdjf dfhjdfhdbfhjbdjfbdfdfbldfldfdjhfldf hjdhjd dhjfdhjfhjdldfldf dfhdfhdfkdf d
-            hdfkdfhbkdhfbdhfbdfdfhjf dhfd djfh djfhdfhjdjf dhjf djf hjdf hdjfhdjf dfhjdfhdbfhjbdjfbdfdfbldfldfdjhfldf
+           <div class="card-text">
+            <ngx-gallery [options]="galleryOptions" [images]="galleryImages"></ngx-gallery>
           </div>
         </div>
+       
       </div>
       <!--/Photos -->
 

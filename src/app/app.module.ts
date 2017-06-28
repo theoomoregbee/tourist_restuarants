@@ -11,7 +11,8 @@ import { PlacesService } from "app/services/places.service";
 import { RatingComponent } from './rating/rating.component';
 import { PlaceComponent } from './place/place.component';
 
-
+import 'hammerjs';
+import { NgxGalleryModule } from 'ngx-gallery';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { PlaceComponent } from './place/place.component';
     BrowserModule,
     BrowserAnimationsModule,
     ClarityModule.forRoot(),
+     NgxGalleryModule
   ],
   providers: [GeolocationService, PlacesService],
   bootstrap: [AppComponent]
