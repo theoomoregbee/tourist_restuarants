@@ -11,7 +11,7 @@
 .card .card-text {
   margin-top: 2px;
   font-size: 13px;
-  font-weight: 500;
+  font-weight: normal;
   line-height: 1.4;
   color: #a2aaaf;
   font-family: 'Myriad pro';
@@ -25,5 +25,16 @@
 clr-icon {
     color: #4EB8FA;
 }
- 
+ .socials {
+     font-size: 20px;
+ }
+
+ .socials i{
+     margin: 3px; 
+ }
+
+.website a, .website a:hover, .website a:visited{
+    font-size: 20px;
+    color: #FFB500;
+}
  

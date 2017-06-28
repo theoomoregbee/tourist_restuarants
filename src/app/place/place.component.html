@@ -1,7 +1,7 @@
-<div style="margin:auto; width:90%; margin-top:10px">
+<div style="margin:auto; width:80%; margin-top:10px">
   <div class="row">
     <!--info pane-->
-    <div class="col-md-7">
+    <div class="col-md-8">
 
       <div class="card" style="padding: 24px;">
         <div class="card-block">
@@ -72,24 +72,39 @@
           <div class="card-header">
             <clr-icon shape="camera"></clr-icon> Photo Gallery
           </div>
-           <div class="card-text">
+          <div class="card-text">
             <ngx-gallery [options]="galleryOptions" [images]="galleryImages"></ngx-gallery>
           </div>
         </div>
-       
+
       </div>
-      <!--/Photos -->
-
-
-      
-      
+      <!--/Photos --> 
 
     </div>
     <!--/info pane-->
 
     <!--Brief info side pane-->
-    <div class="col-md-4" style="background-color:white; margin-left:10px">
-      brief
+    <div class="col-md-4" >
+
+      <div class="card">
+        <div class="card-img">
+          <img src="https://lukasz-galka.github.io/ngx-gallery-demo/assets/img/4-medium.jpeg" />
+        </div>
+        <div class="card-block">
+          <div class="card-text">
+            Address
+            <p align="center" class="website">
+              <a href="http://www.google.com" target="_blank"> <i class="fa fa-link"></i>  Our Website</a> 
+            </p>
+            <p align="center" class="socials">
+              <i class="fa fa-facebook-official"></i>
+              <i class="fa fa-google-plus"></i>
+              <i class="fa fa-twitter"></i>
+            </p>
+          </div>
+        </div>
+      </div>
+
     </div>
     <!--/Brief info side pane-->
 
