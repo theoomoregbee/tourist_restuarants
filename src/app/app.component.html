@@ -32,7 +32,8 @@
   </clr-header>
 
 <!--For map-->
-  <div class="content-container" [hidden]="selected_place">
+  <!--<div class="content-container" [hidden]="selected_place">-->
+  <div class="content-container" *ngIf="false">
     <app-sidenav></app-sidenav>
     <main class="content-area"> 
       <div #map id="map"></div>
@@ -40,7 +41,8 @@
   </div>
 
 <!--For Selected-->
- <div class="content-container" *ngIf="selected_place" >
+ <!--<div class="content-container" *ngIf="selected_place" >-->
+ <div class="content-container">
     <main class="content-area" style="padding-top:10px;" > 
      <a href="#" class="curved-btn" (click)="selected_place=null">&larr; &nbsp; Back</a>
      <app-place [place]="selected_place"></app-place>
