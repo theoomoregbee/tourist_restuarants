@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { IPlace } from "app/interfaces/iplace";
 import { PlacesService } from "app/services/places.service";
-
+declare var google;
 @Component({
   selector: 'app-result',
   template: `
@@ -22,7 +22,7 @@ import { PlacesService } from "app/services/places.service";
     </div> 
     <div class="progress loop" *ngIf="loader"><progress></progress></div>
     <ul class="results">
-      <li *ngFor="let place of places">
+      <li *ngFor="let place of places" (mouseover)="showMarker(place)" (mouseout)="closeMarkerHover(place)">
      
         <div class="row">
           <div class="col-xs-3">
@@ -79,7 +79,7 @@ export class ResultComponent implements OnInit {
     this._placesService.getPlaces().subscribe((places: IPlace[]) => {
       this.places = places;
       this.loader = false;
-      this._changeDetector.detectChanges(); 
+      this._changeDetector.detectChanges();
     });
   }
 
@@ -94,6 +94,17 @@ export class ResultComponent implements OnInit {
 
   setSelected(place: IPlace) {
     this._placesService.selected(place);
+  }
+
+  showMarker(place: IPlace) { 
+    place.marker.map.setCenter(place.marker.getPosition());
+    place.marker.setIcon(this._placesService.customIcon(this.places.indexOf(place).toString(), "#ffb500"));
+    place.marker.setAnimation(google.maps.Animation.BOUNCE);
+  }
+
+  closeMarkerHover(place:IPlace){
+    place.marker.setIcon(this._placesService.customIcon(this.places.indexOf(place).toString()));
+    place.marker.setAnimation(null);    
   }
 
 }

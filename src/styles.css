@@ -66,7 +66,7 @@ padding: 5px;
 .info-box-wrap {
   background:#fff;
   overflow: hidden;
-  box-shadow: 5px 5px 0px rgba(0, 0, 0, 0.08);
+  /*box-shadow: 5px 5px 0px rgba(0, 0, 0, 0.08);*/
   border-radius: 3px; 
 }
 

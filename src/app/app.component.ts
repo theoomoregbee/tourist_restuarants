@@ -75,7 +75,7 @@ export class AppComponent implements OnInit {
             }
 
             //we need markers now 
-            this.addMarker(place.location, index, true, undefined, place);
+            place.marker = this.addMarker(place.location, index, true, undefined, place);
 
             return place;
           });
@@ -100,7 +100,7 @@ export class AppComponent implements OnInit {
    * the position specified
    * 
    */
-  private addMarker(position: { lat: number, lng: number }, place_label: string, hover: boolean, icon_colour?: string, infoWindow?: IInfoWindow): void {
+  private addMarker(position: { lat: number, lng: number }, place_label: string, hover: boolean, icon_colour?: string, infoWindow?: IInfoWindow): any {
 
     let marker = new google.maps.Marker({
       map: this.map,
@@ -108,7 +108,7 @@ export class AppComponent implements OnInit {
       position: position,
       icon: {
         // anchor: new google.maps.Point(16, 16),
-        url: this.customIcon(place_label, icon_colour)
+        url: this._placesService.customIcon(place_label, icon_colour)
       }
     });
 
@@ -122,24 +122,8 @@ export class AppComponent implements OnInit {
       this.addInfoWindow(marker, content);
     }
 
-  }
-
-  /**
-     * this is used to retrieve the link for the marker to be placed on the 
-     * map
-     * @param colour  can either be red, green, blue or yellow or any colour code
-     * @param text which is the text to diplay inside our marker
-     */
-  private customIcon(text: string, colour: string = '#00a5fa') {
-    return `data:image/svg+xml;charset=utf-8, 
-      <svg width="50px" height="50px" viewBox="0 0 130 153" version="1.1" xmlns="http://www.w3.org/2000/svg">
-<g id="#ffb500ff">
-<path fill="${colour}" opacity="1.00" d=" M 14.41 0.00 L 115.54 0.00 C 122.93 0.43 129.56 6.22 130.00 13.80 L 130.00 114.20 C 129.56 121.87 122.65 127.77 115.15 127.93 C 105.13 128.09 95.11 127.97 85.09 127.99 C 77.84 136.22 70.92 144.76 63.68 153.00 L 63.30 153.00 C 56.22 144.67 49.13 136.35 42.07 128.00 C 32.69 127.90 23.31 128.21 13.95 127.85 C 6.76 127.36 0.44 121.51 0.00 114.20 L 0.00 13.81 C 0.44 6.25 7.02 0.45 14.41 0.00 Z" />
-<text xmlns="http://www.w3.org/2000/svg" id="c" x="50%" y="45%" text-anchor="middle" fill="white" stroke-width="2px" dy=".3em" style="&#10;    font-size: 70px;&#10;font-family: sans-serif;">${text}</text>
-</g>
-</svg>`
-  }
-
+    return marker;
+  } 
 
   /**
    * this is used to add the information window to our marker when it's clicked, so users
@@ -262,12 +246,12 @@ export class AppComponent implements OnInit {
    */
   addHoverToMaker(marker, marker_text) {
     let owk = this;
-    google.maps.event.addListener(marker, 'mouseover', function (event) { 
-      this.setIcon(owk.customIcon(marker_text, "#ffb500"));
+    google.maps.event.addListener(marker, 'mouseover', function (event) {
+      this.setIcon(owk._placesService.customIcon(marker_text, "#ffb500"));
     });
 
     google.maps.event.addListener(marker, 'mouseout', function (event) {
-      this.setIcon(owk.customIcon(marker_text));
+      this.setIcon(owk._placesService.customIcon(marker_text));
     });
   }
 

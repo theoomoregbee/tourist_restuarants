@@ -8,4 +8,5 @@ export interface IPlace {
     rating:number;
     photos: string[];
     vicinity:string;
+    marker:any;
 }
