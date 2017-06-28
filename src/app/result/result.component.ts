@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef, ApplicationRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { IPlace } from "app/interfaces/iplace";
 import { PlacesService } from "app/services/places.service";
 
@@ -37,13 +37,13 @@ import { PlacesService } from "app/services/places.service";
                
             </h1>
             <p>{{place.vicinity }}</p>
-            <p>
+            <p style="margin-top:10px">
                <span class="text-primary">Opened:</span> {{place.opening_hours?.open_now?'Yes':'No'}}
             <span class="pull-right">
              <!-- <button class="fab fab-primary" (mouseenter)="showOpeningHours(place, 'enter')" (mouseleave)="showOpeningHours(place, 'leave')">
                 <clr-icon shape="clock" size="24"></clr-icon>
               </button> -->
-              <a href="#" class="curved-btn">More &nbsp; &rarr;</a>
+              <a href="#" class="curved-btn" (click)="setSelected(place)">More &nbsp; &rarr;</a>
             </span>  
             </p> 
           </div>
@@ -72,15 +72,14 @@ export class ResultComponent implements OnInit {
   today = new Date();
   rating_stars: number[] = [1, 2, 3, 4, 5];
 
-  constructor(private _placesService: PlacesService, private _changeDetector: ChangeDetectorRef, private _applicationRef: ApplicationRef) { }
+  constructor(private _placesService: PlacesService, private _changeDetector: ChangeDetectorRef) { }
 
   ngOnInit() {
     this.loader = true;
     this._placesService.getPlaces().subscribe((places: IPlace[]) => {
       this.places = places;
       this.loader = false;
-      this._changeDetector.detectChanges();
-      //this._applicationRef.tick();
+      this._changeDetector.detectChanges(); 
     });
   }
 
@@ -91,6 +90,10 @@ export class ResultComponent implements OnInit {
 
   ceil(x: number) {
     return Math.ceil(x);
+  }
+
+  setSelected(place: IPlace) {
+    this._placesService.selected(place);
   }
 
 }

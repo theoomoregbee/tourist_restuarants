@@ -1,6 +1,7 @@
-import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
+import { Component, ViewChild, ElementRef, OnInit, ChangeDetectorRef } from '@angular/core';
 import { GeolocationService } from "app/services/geolocation.service";
 import { PlacesService } from "app/services/places.service";
+import { IPlace } from "app/interfaces/iplace";
 declare var google, InfoBox;
 
 
@@ -22,12 +23,17 @@ export class AppComponent implements OnInit {
   @ViewChild('map') mapElement: ElementRef;
   map: any;
   mapLoader: boolean = false;
+  selected_place: IPlace;
 
-  constructor(private _geolocationService: GeolocationService, private _placesService: PlacesService) {
+  constructor(private _geolocationService: GeolocationService, private _placesService: PlacesService, private _changeDetector: ChangeDetectorRef) {
 
   }
 
   ngOnInit() {
+    this._placesService.getSelectedPlace().subscribe((place: IPlace) => {
+      this.selected_place = place;
+      this._changeDetector.detectChanges();
+    });
     this.loadMap();
   }
 
@@ -177,7 +183,7 @@ export class AppComponent implements OnInit {
     }
 
     html_info.innerHTML = `
-    <div class="info-box-wrap">
+   
         <div class="row" style="padding:15px">
           <div class="col-xs-3"> 
             <img src="${img}">
@@ -189,27 +195,30 @@ export class AppComponent implements OnInit {
             </p>
             <p>${content.vicinity}</p> 
           </div>
-        </div>
-        <a class="more">MORE &nbsp; &rarr;</a>
-        </div>
+        </div> 
     `;
+    let more_link: HTMLAnchorElement = document.createElement('a');
+    more_link.innerHTML = "MORE &nbsp; &rarr;"
+    more_link.className = "more";
+    html_info.appendChild(more_link);
 
-    // let infoWindow = new google.maps.InfoWindow({
-    //   content: html_info,
-    //   //   maxWidth:'400'
-    // });
 
+    let info_bo_wrapper: HTMLDivElement = document.createElement('div');
+    info_bo_wrapper.className = "info-box-wrap";
+    info_bo_wrapper.appendChild(html_info);
+
+    more_link.addEventListener('click', () => {
+      this._placesService.selected(<IPlace>content);
+    });
 
     let ibOptions: any = {
       disableAutoPan: false
       , maxWidth: 0
       , pixelOffset: new google.maps.Size(-140, 0)
-      //  , alignBottom: true
       , zIndex: null
       , boxStyle: {
         padding: "0px 0px 0px 0px",
-        width: "350px",
-        // height: "40px"
+        width: "350px"
       },
       closeBoxURL: "",
       infoBoxClearance: new google.maps.Size(1, 1),
@@ -217,7 +226,7 @@ export class AppComponent implements OnInit {
       pane: "floatPane",
       enableEventPropagation: false
     };
-    ibOptions.content = html_info
+    ibOptions.content = info_bo_wrapper;
     var ib = new InfoBox(ibOptions);
     ib.isOpen = false;
     marker.ibOptions = ibOptions;

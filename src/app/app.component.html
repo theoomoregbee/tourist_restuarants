@@ -2,8 +2,7 @@
 
   <clr-header class="header">
     <div class="branding">
-      <a href="#" class="nav-link">
-        <!--<clr-icon shape="house"></clr-icon>-->
+      <a class="nav-link"> 
         <span class="title">Tourist Restuarant</span>
       </a>
     </div>
@@ -32,11 +31,20 @@
 
   </clr-header>
 
-
-  <div class="content-container">
+<!--For map-->
+  <div class="content-container" [hidden]="selected_place">
     <app-sidenav></app-sidenav>
     <main class="content-area"> 
       <div #map id="map"></div>
     </main>
   </div>
+
+<!--For Selected-->
+ <div class="content-container" *ngIf="selected_place" >
+    <main class="content-area" style="padding-top:10px;" > 
+     <a href="#" class="curved-btn" (click)="selected_place=null">&larr; &nbsp; Back</a>
+
+    </main>
+ </div>
+
 </clr-main-container>
