@@ -9,6 +9,7 @@ import { ResultComponent } from './result/result.component';
 import { GeolocationService } from "app/services/geolocation.service";
 import { PlacesService } from "app/services/places.service";
 import { RatingComponent } from './rating/rating.component';
+import { PlaceComponent } from './place/place.component';
 
 
 
@@ -17,7 +18,8 @@ import { RatingComponent } from './rating/rating.component';
     AppComponent,
     SidenavComponent,
     ResultComponent,
-    RatingComponent
+    RatingComponent,
+    PlaceComponent
   ],
   imports: [
     BrowserModule,
