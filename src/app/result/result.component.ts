@@ -14,8 +14,8 @@ declare var google;
                 <clr-icon shape="caret down"></clr-icon>
             </a>
           <clr-dropdown-menu>
-            <a href="..." clrDropdownItem>Preferences</a>
-            <a href="..." clrDropdownItem>Log out</a>
+            <a  clrDropdownItem>Test</a>
+            <a  clrDropdownItem>Beta</a>
           </clr-dropdown-menu>
         </clr-dropdown>
         </span>
@@ -96,15 +96,23 @@ export class ResultComponent implements OnInit {
     this._placesService.selected(place);
   }
 
-  showMarker(place: IPlace) { 
+  /**
+   * 
+   * @param place 
+   */
+  showMarker(place: IPlace) {
     place.marker.map.setCenter(place.marker.getPosition());
     place.marker.setIcon(this._placesService.customIcon(this.places.indexOf(place).toString(), "#ffb500"));
     place.marker.setAnimation(google.maps.Animation.BOUNCE);
   }
 
-  closeMarkerHover(place:IPlace){
+  /**
+   * this is simply here to unset our marker when the mouse is out
+   * @param place 
+   */
+  closeMarkerHover(place: IPlace) {
     place.marker.setIcon(this._placesService.customIcon(this.places.indexOf(place).toString()));
-    place.marker.setAnimation(null);    
+    place.marker.setAnimation(null);
   }
 
 }
