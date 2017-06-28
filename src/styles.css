@@ -59,3 +59,65 @@ padding: 5px;
   background-color: #00A5FA;
   color: white;
 }
+
+
+
+/*This is for our google map info windows*/
+/*.gm-style-iw {
+   width: 350px !important;
+   top: 15px !important;
+   left: 0 !important;
+   background-color: #fff;
+   box-shadow: 0 1px 6px rgba(178, 178, 178, 0.6);
+   border: 1px solid rgba(72, 181, 233, 0.6);
+   border-radius: 2px 2px 10px 10px;  
+}*/
+ 
+.info-box-wrap {
+  background:#fff;
+  overflow: hidden;
+  box-shadow: 5px 5px 0px rgba(0, 0, 0, 0.08);
+}
+
+/*arrow*/
+.infoBox:before{
+  content : " ";
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 10px solid #fff;
+  position:absolute;
+  top:-10px;
+  left:130px;
+}
+
+.gm-style img{
+  height: 80px;
+  width: 80px;
+  border-radius: 5px;
+  border: 1px solid rgba(224, 222, 222, 0.44);
+}
+
+.gm-style h1 {
+  font-size: 15px;
+  margin:0px;
+  line-height: normal;
+  font-weight: 500;
+}
+
+.gm-style p {
+  margin-top: 2px;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.gm-style .more{
+    display: block;
+    width: 100%;
+    padding:5px;
+    text-align: center;
+    background-color: #FFB500;
+    color: white;
+}

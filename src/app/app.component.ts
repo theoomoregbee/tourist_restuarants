@@ -1,7 +1,7 @@
 import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
 import { GeolocationService } from "app/services/geolocation.service";
 import { PlacesService } from "app/services/places.service";
-declare var google;
+declare var google, InfoBox;
 
 
 interface IInfoWindow {
@@ -143,7 +143,7 @@ export class AppComponent implements OnInit {
    */
   private addInfoWindow(marker, content: IInfoWindow): void {
 
-    let html_info: HTMLDivElement = document.createElement('div'); 
+    let html_info: HTMLDivElement = document.createElement('div');
 
     let img = content.icon;
     if (content.photos)
@@ -151,25 +151,61 @@ export class AppComponent implements OnInit {
         img = content.photos[0];
 
     html_info.innerHTML = `
-    <div class="row infoWindow">
+    <div class="info-box-wrap">
+        <div class="row">
           <div class="col-xs-3"> 
-            <img src="${img}" >
+            <img src="${img}">
           </div>
           <div class="col-xs-9">
             <h1>${content.name}</h1>
             <p>${content.vicinity}</p> 
           </div>
         </div>
+        <a class="more">More &nbsp; &rarr;</a>
+        </div>
     `;
 
 
 
     let infoWindow = new google.maps.InfoWindow({
-      content: html_info
+      content: html_info,
+      //   maxWidth:'400'
     });
 
+
+    let ibOptions: any = {
+      disableAutoPan: false
+      , maxWidth: 0
+      , pixelOffset: new google.maps.Size(-140, 0)
+      //  , alignBottom: true
+      , zIndex: null
+      , boxStyle: {
+        padding: "0px 0px 0px 0px",
+        width: "252px",
+        height: "40px"
+      },
+      closeBoxURL: "",
+      infoBoxClearance: new google.maps.Size(1, 1),
+      isHidden: false,
+      pane: "floatPane",
+      enableEventPropagation: false
+    };
+    ibOptions.content = html_info
+    var ib = new InfoBox(ibOptions);
+    ib.isOpen = false;
+    marker.ibOptions = ibOptions;
+
     google.maps.event.addListener(marker, 'click', () => {
-      infoWindow.open(this.map, marker);
+      if (!marker.ibOptions.isOpen) {
+        ib.setOptions(marker.ibOptions);
+        ib.open(this.map, marker);
+        marker.ibOptions.isOpen = true;
+        this.map.panTo(ib.getPosition());
+      } else {
+        marker.ibOptions.isOpen = false;
+        ib.close();
+      }
+
     });
 
   }
