@@ -1,7 +1,7 @@
-import { Component, ViewChild, ElementRef, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, ViewChild, ElementRef, OnInit, ChangeDetectorRef, trigger, transition, style, animate, state } from '@angular/core';
 import { GeolocationService } from "app/services/geolocation.service";
 import { PlacesService } from "app/services/places.service";
-import { IPlace } from "app/interfaces/iplace";
+import { IPlace } from "app/interfaces/iplace"; 
 declare var google, InfoBox, jQuery;
 
 
@@ -17,7 +17,25 @@ interface IInfoWindow {
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
+   animations: [
+    trigger(
+      'myAnimation',
+      [
+        transition(
+        ':enter', [
+          style({transform: 'translateY(100%)', opacity: 0}),
+          animate('400ms', style({transform: 'translateY(0)', 'opacity': 1}))
+        ]
+      ),
+      transition(
+        ':leave', [
+          style({transform: 'translateY(0)', 'opacity': 1}),
+          animate('100ms', style({transform: 'translateY(100%)', 'opacity': 0})), 
+        ]
+      )]
+    )
+  ]
 })
 export class AppComponent implements OnInit {
   @ViewChild('map') mapElement: ElementRef;

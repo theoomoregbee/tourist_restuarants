@@ -41,7 +41,7 @@
   </div>
 
   <!--For Selected-->
-  <div class="content-container" *ngIf="selected_place">
+  <div class="content-container" *ngIf="selected_place" [@myAnimation]>
     <!--<div class="content-container">-->
     <main class="content-area" style="padding-top:10px;">
       <a class="curved-btn" (click)="selected_place=null">&larr; &nbsp; Back</a>
