@@ -19,8 +19,8 @@ import { PlacesService } from "app/services/places.service";
           </clr-dropdown-menu>
         </clr-dropdown>
         </span>
-    </div>
-    {{loader}}
+    </div> 
+    <div class="progress loop" *ngIf="loader"><progress></progress></div>
     <ul class="results">
       <li *ngFor="let place of places">
      

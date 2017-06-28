@@ -128,3 +128,7 @@ padding: 5px;
 .infoBox .rating .not-filled{
 color: rgba(224, 222, 222, 0.44);
   }
+
+  .progress {
+      height: 2px;
+  }
