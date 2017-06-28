@@ -235,6 +235,8 @@ export class AppComponent implements OnInit {
       oldDraw.apply(this);
       jQuery(ib.div_).hide();
       jQuery(ib.div_).fadeIn('slow');
+      jQuery(ib.div_).addClass('animated bounce');
+
     }
     marker.ibOptions = ibOptions;
 
@@ -260,11 +262,11 @@ export class AppComponent implements OnInit {
    */
   addHoverToMaker(marker, marker_text) {
     let owk = this;
-    google.maps.event.addListener(marker, 'mouseover', function () {
+    google.maps.event.addListener(marker, 'mouseover', function (event) { 
       this.setIcon(owk.customIcon(marker_text, "#ffb500"));
     });
 
-    google.maps.event.addListener(marker, 'mouseout', function () {
+    google.maps.event.addListener(marker, 'mouseout', function (event) {
       this.setIcon(owk.customIcon(marker_text));
     });
   }
