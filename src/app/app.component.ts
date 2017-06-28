@@ -2,7 +2,7 @@ import { Component, ViewChild, ElementRef, OnInit, ChangeDetectorRef } from '@an
 import { GeolocationService } from "app/services/geolocation.service";
 import { PlacesService } from "app/services/places.service";
 import { IPlace } from "app/interfaces/iplace";
-declare var google, InfoBox;
+declare var google, InfoBox, jQuery;
 
 
 interface IInfoWindow {
@@ -229,6 +229,13 @@ export class AppComponent implements OnInit {
     ibOptions.content = info_bo_wrapper;
     var ib = new InfoBox(ibOptions);
     ib.isOpen = false;
+    //animate with fade in effect
+    var oldDraw = ib.draw;
+    ib.draw = function () {
+      oldDraw.apply(this);
+      jQuery(ib.div_).hide();
+      jQuery(ib.div_).fadeIn('slow');
+    }
     marker.ibOptions = ibOptions;
 
     google.maps.event.addListener(marker, 'click', () => {
