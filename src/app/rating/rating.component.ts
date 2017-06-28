@@ -3,7 +3,7 @@ import { Component, OnInit, Input } from '@angular/core';
 @Component({
   selector: 'app-rating',
   template: `
-        <span class="rating" *ngIf="rating != -1">
+        <span class="rating" *ngIf="rating!=-1">
                <span *ngFor="let rate of rating_stars"> 
                 <small *ngIf="ceil(rating) >= rate">★</small>
                </span>

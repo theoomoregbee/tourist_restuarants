@@ -150,27 +150,54 @@ export class AppComponent implements OnInit {
       if (content.photos.length >= 1)
         img = content.photos[0];
 
+    let rating = "";
+    if (content.rating) {
+      let stars = "";
+      let non_stars = "";
+      for (let rate = 1; rate <= 5; rate++) {
+        if (Math.ceil(content.rating) >= rate) {
+          stars += `<span> 
+                <small>★</small>
+               </span>`;
+        } else {
+          non_stars += ` <span class="not-filled">
+                <small>★</small>
+               </span> `;
+        }
+
+      }
+
+      rating = `  <span class="rating">
+                  ${stars}
+                  ${non_stars} 
+                  </span>
+        `;
+    } else {
+      rating = `<span class="rating" >No rating</span>`;
+    }
+
     html_info.innerHTML = `
     <div class="info-box-wrap">
-        <div class="row">
+        <div class="row" style="padding:15px">
           <div class="col-xs-3"> 
             <img src="${img}">
           </div>
           <div class="col-xs-9">
             <h1>${content.name}</h1>
+            <p>
+              ${rating}
+            </p>
             <p>${content.vicinity}</p> 
           </div>
         </div>
-        <a class="more">More &nbsp; &rarr;</a>
+        <a class="more">MORE &nbsp; &rarr;</a>
         </div>
     `;
 
-
-
-    let infoWindow = new google.maps.InfoWindow({
-      content: html_info,
-      //   maxWidth:'400'
-    });
+    // let infoWindow = new google.maps.InfoWindow({
+    //   content: html_info,
+    //   //   maxWidth:'400'
+    // });
 
 
     let ibOptions: any = {
@@ -181,8 +208,8 @@ export class AppComponent implements OnInit {
       , zIndex: null
       , boxStyle: {
         padding: "0px 0px 0px 0px",
-        width: "252px",
-        height: "40px"
+        width: "350px",
+        // height: "40px"
       },
       closeBoxURL: "",
       infoBoxClearance: new google.maps.Size(1, 1),
