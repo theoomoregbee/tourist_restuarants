@@ -10,7 +10,8 @@ export class PlaceComponent implements OnInit {
   @Input() place: IPlace;
   constructor() { }
 
-  ngOnInit() {
+  ngOnInit() { 
   }
+ 
 
 }

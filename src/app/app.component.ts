@@ -75,7 +75,7 @@ export class AppComponent implements OnInit {
             }
 
             //we need markers now 
-            place.marker = this.addMarker(place.location, index, true, undefined, place);
+            place.marker = this.addMarker(place.location, index, true, undefined, place); 
 
             return place;
           });
