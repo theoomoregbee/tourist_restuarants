@@ -40,15 +40,15 @@ import { PlacesService } from "app/services/places.service";
             <p>
                <span class="text-primary">Opened:</span> {{place.opening_hours?.open_now?'Yes':'No'}}
             <span class="pull-right">
-              <button class="fab fab-primary" (mouseenter)="showOpeningHours(place, 'enter')" (mouseleave)="showOpeningHours(place, 'leave')">
+             <!-- <button class="fab fab-primary" (mouseenter)="showOpeningHours(place, 'enter')" (mouseleave)="showOpeningHours(place, 'leave')">
                 <clr-icon shape="clock" size="24"></clr-icon>
-              </button>
+              </button> -->
               <a href="#" class="curved-btn">More &nbsp; &rarr;</a>
             </span>  
             </p> 
           </div>
         </div>
-        <!-- working hours -->
+        <!-- working hours 
         <div class="row" style="margin-top:10px" *ngIf="place.show">
         {{place.opening_hours | json}}
            <div class="col-xs-3">
@@ -59,7 +59,7 @@ import { PlacesService } from "app/services/places.service";
             <span class="curved-btn">...</span> 
           </div> 
          </div>
-        <!-- working hours end -->
+        working hours end -->
 
       </li>
     </ul>

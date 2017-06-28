@@ -130,5 +130,9 @@ color: rgba(224, 222, 222, 0.44);
   }
 
   .progress {
-      height: 2px;
+      height: 2px; 
   }
+  
+  .progress.loop::after {
+    background-color: #00A5FA; 
+}
