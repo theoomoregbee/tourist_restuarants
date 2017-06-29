@@ -15,6 +15,7 @@ import 'hammerjs';
 import { NgxGalleryModule } from 'ngx-gallery';
 import { ReviewService } from "app/services/review.service";
 import { HttpModule } from "@angular/http";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -30,6 +31,8 @@ import { HttpModule } from "@angular/http";
     ClarityModule.forRoot(),
     NgxGalleryModule,
     HttpModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [GeolocationService, PlacesService, ReviewService],
   bootstrap: [AppComponent]

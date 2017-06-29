@@ -136,3 +136,7 @@ color: rgba(224, 222, 222, 0.44);
   .progress.loop::after {
     background-color: #00A5FA; 
 }
+
+.text-danger {
+  color: red;
+}

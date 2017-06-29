@@ -46,19 +46,20 @@
           <div class="card-header">
             <clr-icon shape="neutral-face"></clr-icon> Our Users Reviews
             <span class="pull-right"> 
-              <button class="btn btn-link" (click)="opened=true" ><clr-icon shape="note-edit"></clr-icon> Add</button> 
+              <button class="btn btn-link" (click)="openAddNew=true" ><clr-icon shape="note-edit"></clr-icon> Add</button> 
             </span>
           </div>
         </div>
-        <div class="card-block" *ngFor="let ourReview of ourReviews | async">
+       
+        <div class="card-block" *ngFor="let ourReview of ourReviews">
           <div class="card-header">
-            {{ourReview.name}} <small style="color:#a2aaaf">{{ourReview.createdAt | date:'dd MMM yy'}}</small>
+            {{ourReview.names}} <small style="color:#a2aaaf">{{ourReview.createdAt | date:'dd MMM yy'}}</small>
             <span class="pull-right">
                 <app-rating [rating]="ourReview.rating"></app-rating>
               </span>
           </div>
           <div class="card-text">
-
+            {{ourReview.review}}
           </div>
         </div>
       </div>
@@ -145,15 +146,73 @@
 
 
 <!--Add Review Modal-->
-<clr-modal [(clrModalOpen)]="opened" [clrModalClosable]="false">
-  <h3 class="modal-title">No "x" in the top-right corner</h3>
+<clr-modal [(clrModalOpen)]="openAddNew" [clrModalClosable]="false">
+
+  <h3 class="modal-title">Add Your Review</h3>
   <div class="modal-body">
-    <p>Clicking on the backdrop doesn't do anything.</p>
+    <clr-alert clrAlertType="alert-{{alert?.type}}" [(clrAlertClosed)]="alert_closed" [clrAlertAppLevel]="appLevelAlert">
+      <div class="alert-item">
+        <span class="alert-text" [innerHTML]="alert?.message"></span>
+      </div>
+    </clr-alert>
+
+    <form [formGroup]="addForm" novalidate>
+      <section class="form-block">
+        <div class="form-group row">
+          <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+            <label for="names">Names</label>
+          </div>
+          <div class="col-lg-4 col-md-8 col-sm-12 col-xs-12">
+            <label for="names" aria-haspopup="true" role="tooltip" class="tooltip tooltip-validation tooltip-sm tooltip-bottom-left"
+              [class.invalid]="addForm.get('names').invalid
+                    && (addForm.get('names').dirty || addForm.get('names').touched)">
+            <input type="text" id="names" placeholder="Enter full name" formControlName="names" size="40">
+             <span class="tooltip-content">
+                    Names is required.
+                </span>
+            </label>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+            <label for="rating">Rating</label>
+          </div>
+          <div class="col-lg-4 col-md-8 col-sm-12 col-xs-12">
+            <label for="rating" aria-haspopup="true" role="tooltip" class="tooltip tooltip-validation tooltip-sm tooltip-bottom-left"
+              [class.invalid]="addForm.get('rating').invalid
+                    && (addForm.get('rating').dirty || addForm.get('rating').touched)">
+            <input type="number" id="rating" step="0.1" placeholder="Enter rating from 1-5" formControlName="rating" size="40">
+             <span class="tooltip-content"> 
+                <small ion-text color="primary" *ngIf="addForm.get('rating').hasError('required')"> Rating is required.</small>
+                <small ion-text color="primary" *ngIf="addForm.get('rating').hasError('min')"> Rating must be greater than 0.</small>
+                <small ion-text color="primary" *ngIf="addForm.get('rating').hasError('max')"> Rating must be 5 or less.</small>
+                </span>
+            </label>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+            <label for="review">Review</label>
+          </div>
+          <div class="col-lg-10 col-md-12 col-sm-12 col-xs-12">
+            <textarea name="review" id="review" cols="30" rows="5" class="form-control" formControlName="review"></textarea>
+            <span class="text-danger" *ngIf="addForm.get('review').invalid
+                    && (addForm.get('review').dirty || addForm.get('review').touched)"> 
+              Review is required 
+            </span>
+          </div>
+        </div>
+      </section>
+    </form>
+
+
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-primary" (click)="opened = false">
-            I'm the only way to close the modal!
-        </button>
+    <button type="button" class="btn btn-outline" (click)="openAddNew = false; addForm.reset()">Close</button>
+    <button [clrLoading]="addLoader" (click)="addReview()" type="button" class="btn btn-primary" [disabled]="addForm.invalid || addForm.pristine"><clr-icon shape="plus"></clr-icon> Add</button>
   </div>
+
 </clr-modal>
 <!--/Add Review Modal-->

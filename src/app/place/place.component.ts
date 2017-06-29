@@ -1,9 +1,15 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectorRef } from '@angular/core';
 import { IPlace } from "app/interfaces/iplace";
 import { NgxGalleryOptions, NgxGalleryImage, NgxGalleryAnimation } from 'ngx-gallery';
 import { Observable } from "rxjs/Observable";
 import { IReview } from "app/interfaces/ireview";
 import { ReviewService } from "app/services/review.service";
+import { FormGroup, Validators, FormBuilder } from "@angular/forms";
+
+interface IMessage {
+  message: string;
+  type: 'danger' | 'success'
+}
 
 @Component({
   selector: 'app-place',
@@ -14,13 +20,18 @@ export class PlaceComponent implements OnInit {
   @Input() place: any;
   galleryOptions: NgxGalleryOptions[];
   galleryImages: NgxGalleryImage[];
-  opened: boolean = false;//modal for adding review
-  ourReviews: Observable<IReview[]>;
+  ourReviews: IReview[] = [];
 
-  constructor(private _reviewService: ReviewService) { }
+  constructor(private _reviewService: ReviewService, private fb: FormBuilder, private _changeDetector: ChangeDetectorRef) {
+    this.createForm();
+  }
 
   ngOnInit() {
-    this.ourReviews = this._reviewService.fetch(this.place.place_id);
+    this._reviewService.fetch(this.place.place_id)
+      .subscribe((reviews: IReview[]) => { 
+        this.ourReviews = reviews; 
+        this._changeDetector.detectChanges();//update the view since our zone is faulty
+      });
 
     this.galleryOptions =
       [{
@@ -46,5 +57,58 @@ export class PlaceComponent implements OnInit {
 
 
 
+  /**
+     * New User component
+     * 
+     * 
+     */
+  openAddNew: boolean = false;//modal toggle for new branch
+  addForm: FormGroup;
+  addLoader: boolean = false;
+  alert: IMessage
+  alert_closed: boolean = true;
+  appLevelAlert: boolean = false;
+
+  /**
+       * create our form for us 
+       */
+  private createForm(): void {
+    this.addForm = this.fb.group({
+      names: ['', Validators.required],
+      review: ['', Validators.required],
+      rating: ['', [Validators.required, Validators.max(5), Validators.min(1)]]
+    });
+  }
+
+
+
+  /**
+  * this is used to create new user
+  */
+  addReview() {
+    this.addLoader = true;
+    let param: any = this.addForm.value;
+    param.placeID = this.place.place_id;// for this place we are inserting the new record for
+    this._reviewService.add(param)
+      .subscribe((review: IReview) => {
+        this._pushAlert({ message: `'${review.names}' Added`, type: 'success' });
+        this.ourReviews.push(review);//add it to our reviews here 
+        this.addLoader = false;
+        this.addForm.reset();
+      }, (error) => {
+        this.addLoader = false;
+        this._pushAlert({ message: error.message, type: 'danger' }, true);
+      });
+  }
+
+  /**
+     * this simply just open our alert for us
+     * @param message 
+     */
+  private _pushAlert(message: IMessage, appLevel: boolean = false): void {
+    this.alert = message;
+    this.alert_closed = false;
+    this.appLevelAlert = appLevel;
+  }
 
 }

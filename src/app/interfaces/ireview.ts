@@ -1,6 +1,6 @@
 export interface IReview {
     id?: string;
-    name: string;
+    names: string;
     place_id: string;
     review: string;
     rating: number;
