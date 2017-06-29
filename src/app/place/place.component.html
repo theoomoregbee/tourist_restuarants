@@ -6,7 +6,7 @@
       <div class="card" style="padding: 24px;">
         <div class="card-block">
           <div class="card-text title">
-            <span style="font-size:30px">{{place.name}}</span> 
+            <span style="font-size:30px">{{place.name}}</span>
             <span class="pull-right">
                  <app-rating [rating]="place.rating"></app-rating>
               </span>
@@ -27,7 +27,8 @@
         </div>
         <div class="card-block" *ngFor="let review of place.reviews">
           <div class="card-header">
-          <img [src]="review.profile_photo_url" style="height:50px" alt="Profile picture">  {{review.author_name}} <small  style="color:#a2aaaf">{{review.relative_time_description}}</small>
+            <img [src]="review.profile_photo_url" style="height:50px" alt="Profile picture"> {{review.author_name}}
+            <small style="color:#a2aaaf">{{review.relative_time_description}}</small>
             <span class="pull-right">
                 <app-rating [rating]="review.rating"></app-rating>
               </span>
@@ -44,21 +45,20 @@
         <div class="card-block">
           <div class="card-header">
             <clr-icon shape="neutral-face"></clr-icon> Our Users Reviews
+            <span class="pull-right"> 
+              <button class="btn btn-link" (click)="opened=true" ><clr-icon shape="note-edit"></clr-icon> Add</button> 
+            </span>
           </div>
         </div>
-        <div class="card-block">
+        <div class="card-block" *ngFor="let ourReview of ourReviews | async">
           <div class="card-header">
-            Theophilus Omoregbee <small style="color:#a2aaaf">09 JUNE 2016</small>
+            {{ourReview.name}} <small style="color:#a2aaaf">{{ourReview.createdAt | date:'dd MMM yy'}}</small>
             <span class="pull-right">
-                <app-rating rating="4"></app-rating>
+                <app-rating [rating]="ourReview.rating"></app-rating>
               </span>
           </div>
           <div class="card-text">
-            hjdhjd dhjfdhjfhjdldfldf dfhdfhdfkdf d hdfkdfhbkdhfbdhfbdfdfhjf dhfd djfh djfhdfhjdjf dhjf djf hjdf hdjfhdjf dfhjdfhdbfhjbdjfbdfdfbldfldfdjhfldf
-            hjdhjd dhjfdhjfhjdldfldf dfhdfhdfkdf d hdfkdfhbkdhfbdhfbdfdfhjf dhfd djfh djfhdfhjdjf dhjf djf hjdf hdjfhdjf
-            dfhjdfhdbfhjbdjfbdfdfbldfldfdjhfldf hjdhjd dhjfdhjfhjdldfldf dfhdfhdfkdf d hdfkdfhbkdhfbdhfbdfdfhjf dhfd djfh
-            djfhdfhjdjf dhjf djf hjdf hdjfhdjf dfhjdfhdbfhjbdjfbdfdfbldfldfdjhfldf hjdhjd dhjfdhjfhjdldfldf dfhdfhdfkdf d
-            hdfkdfhbkdhfbdhfbdfdfhjf dhfd djfh djfhdfhjdjf dhjf djf hjdf hdjfhdjf dfhjdfhdbfhjbdjfbdfdfbldfldfdjhfldf
+
           </div>
         </div>
       </div>
@@ -86,14 +86,14 @@
     <div class="col-md-4">
 
       <div class="card">
-        <div class="card-img"> 
-            <img *ngIf="place.photos?.length>=1" [src]="place.photos[0].getUrl({ maxWidth: 400, maxHeight: 170 })">
-            <img *ngIf="!place.photos" [src]="place.icon">
+        <div class="card-img">
+          <img *ngIf="place.photos?.length>=1" [src]="place.photos[0].getUrl({ maxWidth: 400, maxHeight: 170 })">
+          <img *ngIf="!place.photos" [src]="place.icon">
         </div>
         <div class="card-block">
           <div class="card-text">
             <p align="center" class="website" style="margin-bottom:24px">
-              <a href="tel://{{formatted_phone_number}}"> <i class="fa fa-phone"></i>  {{place.formatted_phone_number}}</a>
+              <a href="tel://{{place.formatted_phone_number}}"> <i class="fa fa-phone"></i>  {{place.formatted_phone_number}}</a>
             </p>
             {{place.formatted_address}}
             <p align="center">
@@ -125,14 +125,14 @@
       </div>
       <!--/Business hours -->
 
-       <!--Your Business Claim -->
-      <div class="card" style="border-bottom-right-radius:5px;border-bottom-left-radius:5px;">
+      <!--Your Business Claim -->
+      <div class="card" style="border-bottom-right-radius:5px;border-bottom-left-radius:5px; margin-bottom:10px">
         <div class="card-block">
           <div class="card-header">
             <clr-icon shape="lightbulb"></clr-icon> Is this your business?
-          </div> 
-        </div> 
-          <a [href]="place.url" target="_blank" class="more">CLAIM IT HERE &nbsp; &rarr;</a>
+          </div>
+        </div>
+        <a [href]="place.url" target="_blank" class="more">CLAIM IT HERE &nbsp; &rarr;</a>
       </div>
       <!--/Your Business Claim -->
 
@@ -142,3 +142,18 @@
   </div>
 
 </div>
+
+
+<!--Add Review Modal-->
+<clr-modal [(clrModalOpen)]="opened" [clrModalClosable]="false">
+  <h3 class="modal-title">No "x" in the top-right corner</h3>
+  <div class="modal-body">
+    <p>Clicking on the backdrop doesn't do anything.</p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-primary" (click)="opened = false">
+            I'm the only way to close the modal!
+        </button>
+  </div>
+</clr-modal>
+<!--/Add Review Modal-->

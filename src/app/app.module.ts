@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; 
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ClarityModule } from "clarity-angular";
 
 import { AppComponent } from './app.component';
@@ -13,6 +13,8 @@ import { PlaceComponent } from './place/place.component';
 
 import 'hammerjs';
 import { NgxGalleryModule } from 'ngx-gallery';
+import { ReviewService } from "app/services/review.service";
+import { HttpModule } from "@angular/http";
 
 @NgModule({
   declarations: [
@@ -26,9 +28,10 @@ import { NgxGalleryModule } from 'ngx-gallery';
     BrowserModule,
     BrowserAnimationsModule,
     ClarityModule.forRoot(),
-     NgxGalleryModule
+    NgxGalleryModule,
+    HttpModule,
   ],
-  providers: [GeolocationService, PlacesService],
+  providers: [GeolocationService, PlacesService, ReviewService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
