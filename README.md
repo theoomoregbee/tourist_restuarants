@@ -20,7 +20,7 @@ Run `ng build -prod --base-href "/tourist_restuarants/"` to build the project. T
 ## Deploy 
 
 * then perform this `git add -A && git commit -m "base url updated for deployment"`
-* Run `git push origin 'git subtree split --prefix dist master':gh-pages --force`
+* Run **git push origin `git subtree split --prefix dist master`:gh-pages --force**
 
 ## Running unit tests
 
