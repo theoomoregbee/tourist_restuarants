@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  endpoint:''
+  endpoint:'https://tourist-restuarant-backend.herokuapp.com/'
 };
